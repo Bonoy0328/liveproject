@@ -83,6 +83,9 @@ checkpointer = ModelCheckpoint(filepath='model.100epochs.hdf5',save_best_only=Tr
 optimizer = keras.optimizers.Adam(lr=0.0001,decay=1e-6)
 model.compile(loss='categorical_crossentropy',optimizer=optimizer,metrics=['accuracy'])
 
+if os.path.exists("model.100epochs.hdf5"):
+    model.load_weights("model.100epochs.hdf5")
+
 history = model.fit(datagen.flow(x_train,y_train,batch_size=batch_size),callbacks=[checkpointer],
                               steps_per_epoch=x_train.shape[0]/batch_size,validation_data=(x_valid,y_valid))
 
